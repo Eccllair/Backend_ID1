@@ -1,0 +1,15 @@
+version: '3'
+services:
+  database:
+    image: "postgres"
+    env_file:
+      - database.env
+    ports:
+      - "5444:5432"
+
+  test_database:
+    image: "postgres"
+    env_file:
+      - database.env
+    ports:
+      - "5440:5432"
