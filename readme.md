@@ -40,5 +40,20 @@
   <li>idz-test_database-1 - Контейнер с БД для тестов</li>
 </ul>
 <h2> Развертывание проекта </h2>
-<code>ls</code>
-<code>clear</code>
+Перейдите в каталог расположения проекта<br>
+Linux:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>cd /usr/local/back-fastapi</code><br>
+Windows:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>C:</code><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>cd C:\back-fastapi</code><br>
+  <br>
+Клонируйте репозиторий<br>
+Linux/Windows:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>git clone https://github.com/Eccllair/Backend_fastapi.git</code><br>
+<br>
+Запустите скрипт развертывания <br>
+<b>Важно! При развертывании должен быть открыт корневой каталог проекта</b><br>
+Windows:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>scripts/build.cmd </code><br>
+Linux:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>scripts/build</code><br>
