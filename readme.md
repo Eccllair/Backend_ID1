@@ -51,6 +51,21 @@ Windows:<br>
 Linux/Windows:<br>
   &nbsp;&nbsp;&nbsp;&nbsp;<code>git clone https://github.com/Eccllair/Backend_fastapi.git</code><br>
 <br>
+Добавьте файлы окружения в корень каталога<br>
+config.py<br>
+<code>  POSTGRES_USER='username'
+  POSTGRES_PASSWORD='password'
+  POSTGRES_SERVER='localhost'
+  POSTGRES_TEST_SERVER='localhost'
+  POSTGRES_DB='dbname'
+</code>
+<br>
+database.env<br>
+<code>  POSTGRES_USER=username
+  POSTGRES_PASSWORD=password
+  POSTGRES_DB=dbname
+</code>
+<br>
 Запустите скрипт развертывания <br>
 <b>Важно! При развертывании должен быть открыт корневой каталог проекта</b><br>
 Windows:<br>
