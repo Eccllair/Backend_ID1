@@ -5,8 +5,8 @@ async def create_user_table(session: AsyncSession):
     await session.execute(text(
         """
             CREATE TABLE user(
-                id SERIAL,
-                name VARCHAR(256)
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(30)
             );
         """
     ))
