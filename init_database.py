@@ -1,4 +1,4 @@
-from models.user_model import Base as user_base
-from database import engine
+import asyncio
+from database import init_user_models
 
-user_base.metadata.create_all(engine)
+asyncio.run(init_user_models())
