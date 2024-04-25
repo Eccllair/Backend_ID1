@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, insert
 
 from models.user_model import User
 from database import get_async_session
@@ -13,7 +13,9 @@ async def get_users(session: AsyncSession = Depends(get_async_session)):
     return (await session.execute(select(User))).scalars().all()
 
 @users_router.post("/")
-async def create_user(session: AsyncSession = Depends(get_async_session)):
+async def create_user(name: str, session: AsyncSession = Depends(get_async_session)):
+    await session.execute(insert(User).values(name=name))
+    await session.commit()
     pass
 
 @users_router.put("/{id}")
