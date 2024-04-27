@@ -3,7 +3,7 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, insert, update, delete
 
-from models.user_model import User
+from models import User
 from database import get_async_session
 
 users_router = APIRouter()
