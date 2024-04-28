@@ -13,3 +13,8 @@ services:
       - database.env
     ports:
       - "5440:5432"
+
+  fastapi_app:
+    image: "fastapi_app"
+    ports:
+      - "8000:8000"
