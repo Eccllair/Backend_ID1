@@ -68,7 +68,7 @@ class MessageRead(Base):
     __tablename__ = "message_read"
     
     id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)      #уникальный идентификатор
-    user_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete='CASCADE'))              #пользователь, прочитавший сообщение
+    user_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete='CASCADE'))               #пользователь, прочитавший сообщение
     message_id: Mapped[int] = mapped_column(ForeignKey(Message.id, ondelete="CASCADE"))         #сообщение
 
 

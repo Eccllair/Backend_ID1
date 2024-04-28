@@ -60,6 +60,8 @@ async def change_user(
         )
     except NoResultFound:
         raise HTTPException(status_code=404, detail=f"пользоватлея с id [{id}] не существует")
+    except IntegrityError as e:
+        raise HTTPException(status_code=409, detail=f"пользователь с введёнными данными уже существует {e._message()}")
     await session.commit()
     
 
