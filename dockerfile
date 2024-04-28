@@ -1,8 +1,10 @@
 FROM python:3.11.3
 
-RUN mkdir /fastapi_app
+RUN mkdir /var/www
 
-WORKDIR /fastapi_app
+RUN mkdir /var/www/fastapi_app
+
+WORKDIR /var/www/fastapi_app
 
 COPY requirements.txt .
 
