@@ -5,7 +5,8 @@ from sqlalchemy import (
     Integer,
     Boolean,
     DateTime,
-    ForeignKey
+    ForeignKey,
+    UniqueConstraint
 )
 from sqlalchemy.orm import (
     DeclarativeBase,
@@ -38,7 +39,7 @@ class Chat(Base):
     __tablename__ = "chat"
     
     id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)      #уникальный идентификатор
-    name: Mapped[str] = mapped_column(type_=String(255), nullable=False)                        #название чата
+    name: Mapped[str] = mapped_column(type_=String(255), nullable=True)                        #название чата
     group_chat: Mapped[bool] = mapped_column(type_=Boolean(), default=False, nullable=False)    #групповой чат/личный чат
 
 
@@ -46,10 +47,11 @@ class Chat(Base):
 class ChatMembers(Base):
     __tablename__ = "chat_members"
     id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)      #уникальный идентификатор
-    member_id: Mapped[int] = mapped_column(ForeignKey(User.id))                                 #участник чата
-    chat_id: Mapped[int] = mapped_column(ForeignKey(User.id))                                   #чат
+    member_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete='CASCADE'))             #участник чата
+    chat_id: Mapped[int] = mapped_column(ForeignKey(Chat.id, ondelete='CASCADE'))               #чат
     admin: Mapped[bool] = mapped_column(Boolean(), default=False)                               #администратор чата/участник чата
     
+    UniqueConstraint('member_id', 'chat_id', name='clone_protection')                           #вторичный ключ, для защиты от дублирования
 
 #сообщения
 class Message(Base):
@@ -57,8 +59,8 @@ class Message(Base):
     
     id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)      #уникальный идентификатор
     text: Mapped[str] = mapped_column(type_=String())                                           #сообщение
-    sender_id: Mapped[int] = mapped_column(ForeignKey(User.id))                                 #отправитель
-    chat_id: Mapped[int] = mapped_column(ForeignKey(Chat.id))                                   #получатель
+    sender_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete='SET NULL'))            #отправитель
+    chat_id: Mapped[int] = mapped_column(ForeignKey(Chat.id, ondelete='CASCADE'))               #получатель
 
 
 #список людей, прочитавших сообщение
@@ -66,19 +68,20 @@ class MessageRead(Base):
     __tablename__ = "message_read"
     
     id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)      #уникальный идентификатор
-    user_id: Mapped[int] = mapped_column(ForeignKey(User.id))                                   #пользователь, прочитавший сообщение
-    message_id: Mapped[int] = mapped_column(ForeignKey(Message.id))                             #сообщение
+    user_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete='CASCADE'))              #пользователь, прочитавший сообщение
+    message_id: Mapped[int] = mapped_column(ForeignKey(Message.id, ondelete="CASCADE"))         #сообщение
 
 
 #токены авторизации пользователя
-class Tokens(Base):
+class Token(Base):
     __tablename__ = "user_and_message"
     
     id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)                              #уникальный идентификатор
-    refresh: Mapped[bool] = mapped_column(type_=Boolean(), nullable=False)                                              #Refrash token/Access token
+    refresh: Mapped[bool] = mapped_column(type_=Boolean(), nullable=False)                                              #Refresh token/Access token
+    jwt: Mapped[str] = mapped_column(type_=String(), nullable=False, unique=True)                                       #собствено сам токен
     date_of_creation: Mapped[str] = mapped_column(type_=DateTime(timezone=True), default=func.now(), nullable=False)    #дата создания
     date_of_expiration: Mapped[str] = mapped_column(type_=DateTime(timezone=True), nullable=False)                      #дата истечения токена
-    user_id: Mapped[int] = mapped_column(ForeignKey(User.id), nullable=False)                                           #пользователь, которому принадлежит токен
+    user_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete="CASCADE"), nullable=False)                                           #пользователь, которому принадлежит токен
 
     
     
