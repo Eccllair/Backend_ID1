@@ -53,7 +53,7 @@
   <li>idz-test_database-1 - Docker контейнер с БД для тестов</li>
 </ul>
 <h2> Развертывание проекта </h2>
-<i>на момент написания readme 27.08.2024 развертывание приложения на linux не реализовано</i><br>
+<i>на момент написания readme 28.04.2024 развертывание приложения на linux не протестировано</i><br>
 Перейдите в каталог расположения проекта<br>
 Linux:<br>
   &nbsp;&nbsp;&nbsp;&nbsp;<code>cd /usr/local/back-fastapi</code><br>
@@ -88,6 +88,7 @@ Linux:<br>
   &nbsp;&nbsp;&nbsp;&nbsp;<code>scripts/build</code><br>
 
 <h2> Запуск проекта </h2>
+<h3> Запуск проекта локально </h3>
 Перейдите в корневой каталог приложения:<br>
 <code> cd ... </code><br>
 <br>
@@ -100,3 +101,13 @@ Linux:<br>
 Запустите приложение:<br>
 Windows/Linux:<br>
 <code>uvicorn main:app</code><br>
+<br>
+или<br>
+<h3> Запуск проекта на Docker </h3>
+Перейдите в корневой каталог приложения:<br>
+<code> cd ... </code><br>
+Запустите скрипт развертывания:<br>
+Windows:<br>
+<code>build-on-docker.cmd</code><br>
+
+после запуска swagger будет доступен по аддресу http://127.0.0.1:8000/docs
