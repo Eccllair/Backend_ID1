@@ -7,9 +7,9 @@ from sqlalchemy import insert, select
 
 from datetime import datetime, timedelta
 
-from database import get_async_session
-from models import Token, User
-from config import (
+from ..database import get_async_session
+from ..models import Token, User
+from ..config import (
     JWT_SECRET,
     ACCESS_TOKEN_LIFE_TIME as AT,
     REFRESH_TOKEN_LIFE_TIME as RT,
