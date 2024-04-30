@@ -1,6 +1,5 @@
 from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -18,12 +17,21 @@ async def init_models():
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
-async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=True)
+async def init_test_models():
+    async with test_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
+        
+async def drop_test_database():
+    async with test_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+
+async_session_maker: sessionmaker[Session] = sessionmaker(engine, class_=AsyncSession, expire_on_commit=True)
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session_maker() as session:
         yield session
 
-async_test_session_maker = sessionmaker(test_engine, class_=AsyncSession, expire_on_commit=True)
+async_test_session_maker: sessionmaker[Session] = sessionmaker(test_engine, class_=AsyncSession, expire_on_commit=True)
 async def get_async_test_session() -> AsyncGenerator[AsyncSession, None]:
-    async with async_session_maker() as session:
+    async with async_test_session_maker() as session:
         yield session
