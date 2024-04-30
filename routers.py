@@ -19,8 +19,13 @@ chat_router = APIRouter()
 ###
 #user
 @users_router.get("/")
-async def get_users(session: AsyncSession = Depends(get_async_session)):
-    return (await session.execute(select(User))).scalars().all()
+async def get_users(login:str | None = None, session: AsyncSession = Depends(get_async_session)):
+    if login: 
+        try:
+            return (await session.execute(select(User).where(User.login == login))).scalar_one()
+        except NoResultFound:
+            raise HTTPException(status_code=404, detail=f"пользоватлея с логином [{login}] не существует")
+    else: return (await session.execute(select(User))).scalars().all()
 
 @users_router.get("/{id}")
 async def get_user(id: int, session: AsyncSession = Depends(get_async_session)):
