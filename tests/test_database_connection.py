@@ -1,4 +1,4 @@
-from database import engine, test_engine
+from ..database import engine, test_engine
 
 def test_db_connection():
     assert engine.connect()
