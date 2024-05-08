@@ -1,0 +1,13 @@
+/venv
+*__pycache__*
+pyproject.toml
+poetry.lock
+database.env
+config.py
+requirements.in
+config_non_docker.py
+.pytest_cache
+/alembic
+alembic.ini
+fastapi.log
+/tmp_product_lists
