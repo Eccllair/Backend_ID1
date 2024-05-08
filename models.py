@@ -81,7 +81,18 @@ class Token(Base):
     jwt: Mapped[str] = mapped_column(type_=String(), nullable=False, unique=True)                                       #собствено сам токен
     date_of_creation: Mapped[str] = mapped_column(type_=DateTime(timezone=True), default=func.now(), nullable=False)    #дата создания
     date_of_expiration: Mapped[str] = mapped_column(type_=DateTime(timezone=True), nullable=False)                      #дата истечения токена
-    user_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete="CASCADE"), nullable=False)                                           #пользователь, которому принадлежит токен
+    user_id: Mapped[int] = mapped_column(ForeignKey(User.id, ondelete="CASCADE"), nullable=False)                       #пользователь, которому принадлежит токен
 
+#продукт
+class Product(Base):
+    __tablename__ = "product"
+
+    id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)                              #уникальный идентификатор
+    name: Mapped[str] = mapped_column(type_=String(255), nullable=False)                                                #Название продукта
+    description : Mapped[str] = mapped_column(type_=String(), nullable=True)                                            #Описание продукта
+    price : Mapped[int] = mapped_column(type_=Integer(), nullable=False)                                                #Цена продукта
+
+    def to_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
     
