@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, insert, update, delete
 from sqlalchemy.exc import NoResultFound, IntegrityError
 
-from ..models import User, Chat, ChatMembers
+from ..models import User
 from ..database import get_async_session
 
 users_router = APIRouter()

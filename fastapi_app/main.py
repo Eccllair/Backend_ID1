@@ -12,7 +12,7 @@ from .routers.product_router import product_router, product_download_router
 
 app = FastAPI()
 
-logging.basicConfig(filename=r'idz\fastapi.log', level=logging.INFO)
+logging.basicConfig(filename=r'fastapi.log', level=logging.INFO)
 
 app.add_middleware(
     TrustedHostMiddleware,

@@ -7,7 +7,7 @@ from fastapi import (
 )
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, insert, update, delete
-from sqlalchemy.exc import NoResultFound, IntegrityError
+from sqlalchemy.exc import NoResultFound
 from starlette.responses import FileResponse
 
 from ..models import Product
@@ -37,7 +37,7 @@ async def download_product_list(session: AsyncSession = Depends(get_async_sessio
     for product in products:
         result += (product.to_dict(),)
         
-    with open('idz/tmp_product_lists/list.txt', 'w') as file:
+    with open('tmp_product_lists/list.txt', 'w') as file:
         file.write(json.dumps(result))
-    return FileResponse('idz/tmp_product_lists/list.txt', media_type='application/octet-stream',filename='list.txt')
+    return FileResponse('tmp_product_lists/list.txt', media_type='application/octet-stream',filename='list.txt')
     

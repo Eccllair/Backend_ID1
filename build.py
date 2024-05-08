@@ -1,9 +1,11 @@
 import configparser
+import asyncio
 
-from config import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_TEST_SERVER, POSTGRES_DB
+from fastapi_app.config import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_TEST_SERVER, POSTGRES_DB
+from fastapi_app.database import init_models, init_test_models, SQLALCHEMY_DATABASE_URL
 
-#TODO from . database import SQLALCHEMY_DATABASE_URL
-SQLALCHEMY_DATABASE_URL=f'postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_TEST_SERVER}:5444/{POSTGRES_DB}'
+asyncio.run(init_models())
+asyncio.run(init_test_models())
 
 config = configparser.ConfigParser()
 config.read('alembic.ini')

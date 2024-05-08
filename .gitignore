@@ -1,7 +1,7 @@
 /venv
 *__pycache__*
-pyproject.toml
-poetry.lock
+*pyproject.toml*
+*poetry.lock*
 database.env
 config.py
 requirements.in
