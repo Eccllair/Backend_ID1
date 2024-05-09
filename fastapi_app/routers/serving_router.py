@@ -1,11 +1,21 @@
+import asyncio
+
 from fastapi import (
     APIRouter,
-    BackgroundTasks   
+    BackgroundTasks
 )
-
 from datetime import datetime
 
+from ..database import init_models
+
 serving_router = APIRouter()
+
+#TODO добавить секьюрность
+@serving_router.post("/reset_database")
+async def reset_database():
+    await init_models()
+    return 200
+
 
 @serving_router.get("/get_time")
 async def get_time(backgroundTasks: BackgroundTasks):

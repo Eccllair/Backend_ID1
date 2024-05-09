@@ -14,10 +14,10 @@ app = FastAPI()
 
 logging.basicConfig(filename=r'fastapi.log', level=logging.INFO)
 
-app.add_middleware(
-    TrustedHostMiddleware,
-    allowed_hosts=["localhost", "127.0.0.1", "0.0.0.0"]
-)
+# app.add_middleware(
+#     TrustedHostMiddleware,
+#     allowed_hosts=["localhost", "127.0.0.1", "0.0.0.0", "dashboard.render.com", "216.24.57.4"]
+# )
 
 @app.middleware("http")
 async def log_queries(request: Request, call_next):
