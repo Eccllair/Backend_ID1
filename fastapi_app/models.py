@@ -1,9 +1,12 @@
+from datetime import date
+
 from typing import Optional
 from sqlalchemy.sql import func
 from sqlalchemy import (
     String,
     Integer,
     Boolean,
+    Date,
     DateTime,
     ForeignKey,
     UniqueConstraint
@@ -26,12 +29,14 @@ class User(Base):
     
     id: Mapped[int] = mapped_column(type_=Integer(), primary_key=True, autoincrement=True)      #уникальный идентификатор
     name: Mapped[str] = mapped_column(type_=String(255), unique=False, nullable=False)          #имя
-    surname: Mapped[str] = mapped_column(type_=String(255), unique=False, nullable=False)       #фамилия
+    surname: Mapped[str] = mapped_column(type_=String(255), unique=False, nullable=True)        #фамилия
     patronymic: Mapped[str] = mapped_column(type_=String(255), unique=False, nullable=True)     #отчество
-    mail: Mapped[str] = mapped_column(type_=String(255), unique=True, nullable=False)           #почта для верификации
+    mail: Mapped[str] = mapped_column(type_=String(255), unique=True, nullable=True)            #почта для верификации
     verified: Mapped[bool] = mapped_column(type_=Boolean(), default=False, nullable=False)      #почта подтверждена/не подтверждена
     login: Mapped[str] = mapped_column(type_=String(255), unique=True, nullable=False)          #уникальное имя пользователя
     pwd: Mapped[str] = mapped_column(type_=String(255), unique=False, nullable=False)           #хэш пароля
+    birthday: Mapped[date] = mapped_column(type_=Date(), unique=False, nullable=True)           #дата рождения
+    height: Mapped[int] = mapped_column(type_=Integer(), unique=False, nullable=True)           #хэш пароля
 
 
 #чат
@@ -94,5 +99,3 @@ class Product(Base):
 
     def to_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-    
-    

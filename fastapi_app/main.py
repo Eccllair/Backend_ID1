@@ -9,10 +9,11 @@ from .routers.chat_router import chat_router
 from .routers.user_router import users_router
 from .routers.serving_router import serving_router
 from .routers.product_router import product_router, product_download_router
+from .routers.auth_router import auth_router
 
 app = FastAPI()
 
-logging.basicConfig(filename=r'fastapi.log', level=logging.INFO)
+logging.basicConfig(filename='fastapi.log', level=logging.INFO)
 
 app.add_middleware(
     TrustedHostMiddleware,
@@ -50,4 +51,8 @@ app.include_router(
 app.include_router(
     router=product_download_router,
     prefix="/products_download"
+)
+
+app.include_router(
+    router=auth_router
 )

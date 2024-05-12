@@ -11,3 +11,4 @@ config_non_docker.py
 alembic.ini
 fastapi.log
 /tmp_product_lists
+/data
